@@ -1,10 +1,39 @@
+const HapticEngine = {
+  getEngine() {
+    const win = (window as any);
+    return win.TapticEngine || (win.Capacitor && win.Capacitor.Plugins.Haptics);
+  },
+  available() {
+    return !!this.getEngine();
+  },
+  isCordova() {
+    return !!(window as any).TapticEngine;
+  },
+  isCapacitor() {
+    const win = (window as any);
+    return !!win.Capacitor;
+  },
+  impact(options) {
+    if (this.isCapacitor()) {
+      getEngine().impact()
+    }
+  },
+  notification() {
+  },
+  selectionChanged() {
+  },
+  selectionEnd() {
+  },
+  selectionStart() {
+  }
+}
+
 /**
  * Check to see if the Haptic Plugin is available
  * @return Returns `true` or false if the plugin is available
  */
 export const hapticAvailable = (): boolean => {
-  const engine = (window as any).TapticEngine;
-  return !!engine;
+  return HapticEngine.available();
 };
 
 /**
@@ -12,30 +41,21 @@ export const hapticAvailable = (): boolean => {
  * (not for gestures)
  */
 export const hapticSelection = () => {
-  const engine = (window as any).TapticEngine;
-  if (engine) {
-    engine.selection();
-  }
+  HapticEngine.selectionStart();
 };
 
 /**
  * Tell the haptic engine that a gesture for a selection change is starting.
  */
 export const hapticSelectionStart = () => {
-  const engine = (window as any).TapticEngine;
-  if (engine) {
-    engine.gestureSelectionStart();
-  }
+  HapticEngine.selectionStart();
 };
 
 /**
  * Tell the haptic engine that a selection changed during a gesture.
  */
 export const hapticSelectionChanged = () => {
-  const engine = (window as any).TapticEngine;
-  if (engine) {
-    engine.gestureSelectionChanged();
-  }
+  HapticEngine.selectionChanged();
 };
 
 /**
@@ -43,10 +63,7 @@ export const hapticSelectionChanged = () => {
  * called lest resources are not properly recycled.
  */
 export const hapticSelectionEnd = () => {
-  const engine = (window as any).TapticEngine;
-  if (engine) {
-    engine.gestureSelectionEnd();
-  }
+  HapticEngine.selectionEnd();
 };
 
 /**
@@ -54,10 +71,7 @@ export const hapticSelectionEnd = () => {
  * options should be of the type `{ type: 'success' }` (or `warning`/`error`)
  */
 export const hapticNotification = (options: { type: 'success' | 'warning' | 'error' }) => {
-  const engine = (window as any).TapticEngine;
-  if (engine) {
-    engine.notification(options);
-  }
+  HapticEngine.notification(options);
 };
 
 /**
@@ -65,8 +79,5 @@ export const hapticNotification = (options: { type: 'success' | 'warning' | 'err
  * options should be of the type `{ style: 'light' }` (or `medium`/`heavy`)
  */
 export const hapticImpact = (options: { style: 'light' | 'medium' | 'heavy' }) => {
-  const engine = (window as any).TapticEngine;
-  if (engine) {
-    engine.impact(options);
-  }
+  HapticEngine.impact(options);
 };
