@@ -25,6 +25,7 @@
 // Segment: Color
 // --------------------------------------------------
 
+/*
 :host(.ion-color)::slotted(ion-segment-button) {
   --border-color: #{current-color(base)};
 
@@ -41,6 +42,11 @@
 :host(.ion-color)::slotted(.segment-button-checked) {
   background: #{current-color(base)};
   color: #{current-color(contrast)};
+  // background: #{var(--ion-toolbar-color-checked, var(--background-checked))};
+  background: #FFFEFF;
+
+  // color: #{var(--ion-toolbar-background, var(--color-checked))};
+  color: #0A090A;
 }
 
 :host(.ion-color)::slotted(.segment-button-disabled) {
@@ -56,6 +62,7 @@
     background: #{current-color(base, .1)};
   }
 }
+*/
 
 
 // Segment: Default Toolbar
@@ -76,9 +83,11 @@
 }
 
 :host-context(ion-toolbar:not(.ion-color)):not(.ion-color)::slotted(.segment-button-checked) {
-  background: #{var(--ion-toolbar-color-checked, var(--background-checked))};
+  // background: #{var(--ion-toolbar-color-checked, var(--background-checked))};
+  background: #FFFEFF;
 
-  color: #{var(--ion-toolbar-background, var(--color-checked))};
+  // color: #{var(--ion-toolbar-background, var(--color-checked))};
+  color: #0A090A;
 }
 
 // Segment: Color Toolbar

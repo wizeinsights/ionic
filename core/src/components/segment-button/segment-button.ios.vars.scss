@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Background of the segment button
-$segment-button-ios-background-color:                 transparent !default;
+$segment-button-ios-background-color:                 #EEEDEF !default;
 
 /// @prop - Background of the checked segment button
 $segment-button-ios-background-color-checked:         ion-color(primary, base) !default;
@@ -28,7 +28,7 @@ $segment-button-ios-background-color-activated:       ion-color(primary, base, $
 $segment-button-ios-background-color-disabled:        ion-color(primary, base, $segment-button-ios-opacity-disabled) !default;
 
 /// @prop - Text color of the segment button
-$segment-button-ios-text-color:                       ion-color(primary, base) !default;
+$segment-button-ios-text-color:                       #0A0A09 !default;
 
 /// @prop - Text color of the checked segment button
 $segment-button-ios-text-color-checked:               ion-color(primary, contrast) !default;
@@ -49,7 +49,8 @@ $segment-button-ios-font-size:                        13px !default;
 $segment-button-ios-border-radius:                    4px !default;
 
 /// @prop - Border color of the segment button
-$segment-button-ios-border-color:                     ion-color(primary, base) !default;
+// $segment-button-ios-border-color:                     ion-color(primary, base) !default;
+$segment-button-ios-border-color:                     #F6F6F6 !default;
 
 /// @prop - Size of an icon in the segment button
 $segment-button-ios-icon-size:                        24px !default;
