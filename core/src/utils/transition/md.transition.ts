@@ -62,7 +62,7 @@ const getIonPageElement = (element: HTMLElement) => {
     return element;
   }
 
-  const ionPage = element.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs');
+  const ionPage = element.querySelector('.ion-page, :scope > ion-nav, :scope > ion-tabs');
   if (ionPage) {
     return ionPage;
   }
