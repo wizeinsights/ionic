@@ -2,8 +2,8 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, Watc
 
 import { getIonMode } from '../../global/ionic-global';
 import { Gesture, GestureDetail, PickerColumn } from '../../interface';
-import { hapticSelectionChanged } from '../../utils/haptic';
 import { clamp } from '../../utils/helpers';
+import { hapticImpact } from '../../utils/haptic';
 
 /**
  * @internal
@@ -189,7 +189,7 @@ export class PickerColumnCmp implements ComponentInterface {
 
     if (this.lastIndex !== selectedIndex) {
       // have not set a last index yet
-      hapticSelectionChanged();
+      hapticImpact({ style: 'light' });
       this.lastIndex = selectedIndex;
     }
   }
@@ -265,6 +265,8 @@ export class PickerColumnCmp implements ComponentInterface {
 
     this.minY = -(minY * this.optHeight);
     this.maxY = -(maxY * this.optHeight);
+
+    // hapticSelectionStart();
   }
 
   private onMove(detail: GestureDetail) {
@@ -292,6 +294,8 @@ export class PickerColumnCmp implements ComponentInterface {
   }
 
   private onEnd(detail: GestureDetail) {
+    // hapticSelectionEnd();
+
     if (this.bounceFrom > 0) {
       // bounce back up
       this.update(this.minY, 100, true);

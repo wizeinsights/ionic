@@ -1,7 +1,16 @@
+// Main types for this API
+interface HapticImpactOptions {
+  style: 'light' | 'medium' | 'heavy';
+}
+
+interface HapticNotificationOptions {
+  style: 'success' | 'warning' | 'error';
+}
+
 const HapticEngine = {
   getEngine() {
     const win = (window as any);
-    return win.TapticEngine || (win.Capacitor && win.Capacitor.Plugins.Haptics);
+    return (win.TapticEngine) || (win.Capacitor && win.Capacitor.Plugins.Haptics);
   },
   available() {
     return !!this.getEngine();
@@ -13,20 +22,59 @@ const HapticEngine = {
     const win = (window as any);
     return !!win.Capacitor;
   },
-  impact(options) {
-    if (this.isCapacitor()) {
-      getEngine().impact()
+  impact(options: HapticImpactOptions) {
+    const engine = this.getEngine();
+    if (!engine) {
+      return;
     }
+    const style = this.isCapacitor() ? options.style.toUpperCase() : options.style;
+    engine.impact({ style });
   },
-  notification() {
+  notification(options: HapticNotificationOptions) {
+    const engine = this.getEngine();
+    if (!engine) {
+      return;
+    }
+    const style = this.isCapacitor() ? options.style.toUpperCase() : options.style;
+    engine.notification({ style });
   },
-  selectionChanged() {
-  },
-  selectionEnd() {
+  selection() {
+    this.impact({ style: 'light' });
   },
   selectionStart() {
+    const engine = this.getEngine();
+    if (!engine) {
+      return;
+    }
+    if (this.isCapacitor()) {
+      engine.selectionStart();
+    } else {
+      engine.gestureSelectionStart();
+    }
+  },
+  selectionChanged() {
+    const engine = this.getEngine();
+    if (!engine) {
+      return;
+    }
+    if (this.isCapacitor()) {
+      engine.selectionChanged();
+    } else {
+      engine.gestureSelectionChanged();
+    }
+  },
+  selectionEnd() {
+    const engine = this.getEngine();
+    if (!engine) {
+      return;
+    }
+    if (this.isCapacitor()) {
+      engine.selectionChanged();
+    } else {
+      engine.gestureSelectionChanged();
+    }
   }
-}
+};
 
 /**
  * Check to see if the Haptic Plugin is available
@@ -41,7 +89,7 @@ export const hapticAvailable = (): boolean => {
  * (not for gestures)
  */
 export const hapticSelection = () => {
-  HapticEngine.selectionStart();
+  HapticEngine.selection();
 };
 
 /**
@@ -70,7 +118,7 @@ export const hapticSelectionEnd = () => {
  * Use this to indicate success/failure/warning to the user.
  * options should be of the type `{ type: 'success' }` (or `warning`/`error`)
  */
-export const hapticNotification = (options: { type: 'success' | 'warning' | 'error' }) => {
+export const hapticNotification = (options: HapticNotificationOptions) => {
   HapticEngine.notification(options);
 };
 
@@ -78,6 +126,6 @@ export const hapticNotification = (options: { type: 'success' | 'warning' | 'err
  * Use this to indicate success/failure/warning to the user.
  * options should be of the type `{ style: 'light' }` (or `medium`/`heavy`)
  */
-export const hapticImpact = (options: { style: 'light' | 'medium' | 'heavy' }) => {
+export const hapticImpact = (options: HapticImpactOptions) => {
   HapticEngine.impact(options);
 };
