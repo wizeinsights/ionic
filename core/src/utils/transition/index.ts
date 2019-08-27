@@ -1,13 +1,13 @@
 import { writeTask } from '@stencil/core';
 
 import { LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '../../components/nav/constants';
-import { IonicAnimation, NavDirection, NavOptions } from '../../interface';
+import { Animation, NavDirection, NavOptions } from '../../interface';
 
 const iosTransitionAnimation = () => import('./ios.transition');
 const mdTransitionAnimation = () => import('./md.transition');
 
 // TODO: Remove when removing AnimationBuilder
-export type IonicAnimationInterface = (navEl: HTMLElement, opts: TransitionOptions) => IonicAnimation;
+export type AnimationInterface = (navEl: HTMLElement, opts: TransitionOptions) => Animation;
 
 export const transition = (opts: TransitionOptions): Promise<TransitionResult> => {
   return new Promise((resolve, reject) => {
@@ -63,7 +63,7 @@ const afterTransition = (opts: TransitionOptions) => {
   }
 };
 
-const getAnimationBuilder = async (opts: TransitionOptions): Promise<IonicAnimationInterface | undefined> => {
+const getAnimationBuilder = async (opts: TransitionOptions): Promise<AnimationInterface | undefined> => {
   if (!opts.leavingEl || !opts.animated || opts.duration === 0) {
     return undefined;
   }
@@ -79,10 +79,10 @@ const getAnimationBuilder = async (opts: TransitionOptions): Promise<IonicAnimat
   return getAnimation;
 };
 
-const animation = async (animationBuilder: IonicAnimationInterface, opts: TransitionOptions): Promise<TransitionResult> => {
+const animation = async (animationBuilder: AnimationInterface, opts: TransitionOptions): Promise<TransitionResult> => {
   await waitForReady(opts, true);
 
-  const trans: IonicAnimation = animationBuilder(opts.baseEl, opts);
+  const trans: Animation = animationBuilder(opts.baseEl, opts);
 
   fireWillEvents(opts.enteringEl, opts.leavingEl);
 
@@ -139,7 +139,7 @@ const notifyViewReady = async (viewIsReady: undefined | ((enteringEl: HTMLElemen
   }
 };
 
-const playTransition = (trans: IonicAnimation, opts: TransitionOptions): Promise<Animation | boolean> => {
+const playTransition = (trans: Animation, opts: TransitionOptions): Promise<Animation | boolean> => {
   const progressCallback = opts.progressCallback;
 
   const promise = new Promise<Animation | boolean>(resolve => trans.onFinish(resolve));
@@ -228,7 +228,7 @@ const setZIndex = (
 };
 
 export interface TransitionOptions extends NavOptions {
-  progressCallback?: ((ani: IonicAnimation | undefined) => void);
+  progressCallback?: ((ani: Animation | undefined) => void);
   baseEl: any;
   enteringEl: HTMLElement;
   leavingEl: HTMLElement | undefined;
@@ -236,5 +236,5 @@ export interface TransitionOptions extends NavOptions {
 
 export interface TransitionResult {
   hasCompleted: boolean;
-  animation?: IonicAnimation;
+  animation?: Animation;
 }

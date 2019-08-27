@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, Color, CssClassMap, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
+import { Animation, Color, CssClassMap, OverlayEventDetail, OverlayInterface, ToastButton } from '../../interface';
 import { dismiss, eventMethod, isCancel, present, safeCall } from '../../utils/overlays';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses, getClassMap } from '../../utils/theme';
@@ -47,12 +47,12 @@ export class Toast implements ComponentInterface, OverlayInterface {
   /**
    * Animation to use when the toast is presented.
    */
-  @Prop() enterAnimation?: AnimationBuilder;
+  @Prop() enterAnimation?: Animation;
 
   /**
    * Animation to use when the toast is dismissed.
    */
-  @Prop() leaveAnimation?: AnimationBuilder;
+  @Prop() leaveAnimation?: Animation;
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are

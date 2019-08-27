@@ -12,7 +12,7 @@ import {
   AlertButton,
   AlertInput,
   AlertOptions,
-  AnimationBuilder,
+  Animation,
   CheckboxChangeEventDetail,
   Color,
   ComponentProps,
@@ -25,7 +25,6 @@ import {
   HeaderFn,
   HeaderHeightFn,
   InputChangeEventDetail,
-  IonicAnimation,
   ItemHeightFn,
   ItemRenderFn,
   ItemReorderEventDetail,
@@ -106,7 +105,7 @@ export namespace Components {
     /**
     * Animation to use when the action sheet is presented.
     */
-    'enterAnimation'?: AnimationBuilder;
+    'enterAnimation'?: Animation;
     /**
     * Title for the action sheet.
     */
@@ -118,7 +117,7 @@ export namespace Components {
     /**
     * Animation to use when the action sheet is dismissed.
     */
-    'leaveAnimation'?: AnimationBuilder;
+    'leaveAnimation'?: Animation;
     /**
     * The mode determines which platform styles to use.
     */
@@ -189,7 +188,7 @@ export namespace Components {
     /**
     * Animation to use when the alert is presented.
     */
-    'enterAnimation'?: AnimationBuilder;
+    'enterAnimation'?: Animation;
     /**
     * The main title in the heading of the alert.
     */
@@ -205,7 +204,7 @@ export namespace Components {
     /**
     * Animation to use when the alert is dismissed.
     */
-    'leaveAnimation'?: AnimationBuilder;
+    'leaveAnimation'?: Animation;
     /**
     * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
@@ -1240,7 +1239,7 @@ export namespace Components {
     /**
     * Animation to use when the loading indicator is presented.
     */
-    'enterAnimation'?: AnimationBuilder;
+    'enterAnimation'?: Animation;
     /**
     * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
     */
@@ -1248,7 +1247,7 @@ export namespace Components {
     /**
     * Animation to use when the loading indicator is dismissed.
     */
-    'leaveAnimation'?: AnimationBuilder;
+    'leaveAnimation'?: Animation;
     /**
     * Optional text content to display in the loading indicator.
     */
@@ -1427,7 +1426,7 @@ export namespace Components {
     * @param name The name of the animation to register.
     * @param animation The animation function to register.
     */
-    'registerAnimation': (name: string, animation: AnimationBuilder | ((menu: MenuI) => IonicAnimation)) => Promise<void>;
+    'registerAnimation': (name: string, animation: (menu: MenuI) => Animation) => Promise<void>;
     /**
     * Enable or disable the ability to swipe open the menu.
     * @param enable If `true`, the menu swipe gesture should be enabled.
@@ -1481,7 +1480,7 @@ export namespace Components {
     /**
     * Animation to use when the modal is presented.
     */
-    'enterAnimation'?: AnimationBuilder;
+    'enterAnimation'?: Animation;
     /**
     * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
     */
@@ -1489,7 +1488,7 @@ export namespace Components {
     /**
     * Animation to use when the modal is dismissed.
     */
-    'leaveAnimation'?: AnimationBuilder;
+    'leaveAnimation'?: Animation;
     /**
     * The mode determines which platform styles to use.
     */
@@ -1538,7 +1537,7 @@ export namespace Components {
     /**
     * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions.
     */
-    'animation'?: AnimationBuilder;
+    'animation'?: Animation;
     /**
     * Returns `true` if the current view can go back.
     * @param view The view to check.
@@ -1706,7 +1705,7 @@ export namespace Components {
     /**
     * Animation to use when the picker is presented.
     */
-    'enterAnimation'?: AnimationBuilder;
+    'enterAnimation'?: Animation;
     /**
     * Get the column that matches the specified name.
     * @param name The name of the column.
@@ -1719,7 +1718,7 @@ export namespace Components {
     /**
     * Animation to use when the picker is dismissed.
     */
-    'leaveAnimation'?: AnimationBuilder;
+    'leaveAnimation'?: Animation;
     /**
     * The mode determines which platform styles to use.
     */
@@ -1797,7 +1796,7 @@ export namespace Components {
     /**
     * Animation to use when the popover is presented.
     */
-    'enterAnimation'?: AnimationBuilder;
+    'enterAnimation'?: Animation;
     /**
     * The event to pass to the popover animation.
     */
@@ -1809,7 +1808,7 @@ export namespace Components {
     /**
     * Animation to use when the popover is dismissed.
     */
-    'leaveAnimation'?: AnimationBuilder;
+    'leaveAnimation'?: Animation;
     /**
     * The mode determines which platform styles to use.
     */
@@ -2130,7 +2129,7 @@ export namespace Components {
     /**
     * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions.
     */
-    'animation'?: AnimationBuilder;
+    'animation'?: Animation;
     'commit': (enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
     'delegate'?: FrameworkDelegate;
     'getRouteId': () => Promise<RouteID | undefined>;
@@ -2711,7 +2710,7 @@ export namespace Components {
     /**
     * Animation to use when the toast is presented.
     */
-    'enterAnimation'?: AnimationBuilder;
+    'enterAnimation'?: Animation;
     /**
     * Header to be shown in the toast.
     */
@@ -2723,7 +2722,7 @@ export namespace Components {
     /**
     * Animation to use when the toast is dismissed.
     */
-    'leaveAnimation'?: AnimationBuilder;
+    'leaveAnimation'?: Animation;
     /**
     * Message to be shown in the toast.
     */
@@ -3590,7 +3589,7 @@ declare namespace LocalJSX {
     /**
     * Animation to use when the action sheet is presented.
     */
-    'enterAnimation'?: AnimationBuilder;
+    'enterAnimation'?: Animation;
     /**
     * Title for the action sheet.
     */
@@ -3602,7 +3601,7 @@ declare namespace LocalJSX {
     /**
     * Animation to use when the action sheet is dismissed.
     */
-    'leaveAnimation'?: AnimationBuilder;
+    'leaveAnimation'?: Animation;
     /**
     * The mode determines which platform styles to use.
     */
@@ -3653,7 +3652,7 @@ declare namespace LocalJSX {
     /**
     * Animation to use when the alert is presented.
     */
-    'enterAnimation'?: AnimationBuilder;
+    'enterAnimation'?: Animation;
     /**
     * The main title in the heading of the alert.
     */
@@ -3669,7 +3668,7 @@ declare namespace LocalJSX {
     /**
     * Animation to use when the alert is dismissed.
     */
-    'leaveAnimation'?: AnimationBuilder;
+    'leaveAnimation'?: Animation;
     /**
     * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
     */
@@ -4710,7 +4709,7 @@ declare namespace LocalJSX {
     /**
     * Animation to use when the loading indicator is presented.
     */
-    'enterAnimation'?: AnimationBuilder;
+    'enterAnimation'?: Animation;
     /**
     * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
     */
@@ -4718,7 +4717,7 @@ declare namespace LocalJSX {
     /**
     * Animation to use when the loading indicator is dismissed.
     */
-    'leaveAnimation'?: AnimationBuilder;
+    'leaveAnimation'?: Animation;
     /**
     * Optional text content to display in the loading indicator.
     */
@@ -4860,7 +4859,7 @@ declare namespace LocalJSX {
     /**
     * Animation to use when the modal is presented.
     */
-    'enterAnimation'?: AnimationBuilder;
+    'enterAnimation'?: Animation;
     /**
     * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
     */
@@ -4868,7 +4867,7 @@ declare namespace LocalJSX {
     /**
     * Animation to use when the modal is dismissed.
     */
-    'leaveAnimation'?: AnimationBuilder;
+    'leaveAnimation'?: Animation;
     /**
     * The mode determines which platform styles to use.
     */
@@ -4903,7 +4902,7 @@ declare namespace LocalJSX {
     /**
     * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions.
     */
-    'animation'?: AnimationBuilder;
+    'animation'?: Animation;
     /**
     * Event fired when the nav has changed components
     */
@@ -4984,7 +4983,7 @@ declare namespace LocalJSX {
     /**
     * Animation to use when the picker is presented.
     */
-    'enterAnimation'?: AnimationBuilder;
+    'enterAnimation'?: Animation;
     /**
     * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
     */
@@ -4992,7 +4991,7 @@ declare namespace LocalJSX {
     /**
     * Animation to use when the picker is dismissed.
     */
-    'leaveAnimation'?: AnimationBuilder;
+    'leaveAnimation'?: Animation;
     /**
     * The mode determines which platform styles to use.
     */
@@ -5049,7 +5048,7 @@ declare namespace LocalJSX {
     /**
     * Animation to use when the popover is presented.
     */
-    'enterAnimation'?: AnimationBuilder;
+    'enterAnimation'?: Animation;
     /**
     * The event to pass to the popover animation.
     */
@@ -5061,7 +5060,7 @@ declare namespace LocalJSX {
     /**
     * Animation to use when the popover is dismissed.
     */
-    'leaveAnimation'?: AnimationBuilder;
+    'leaveAnimation'?: Animation;
     /**
     * The mode determines which platform styles to use.
     */
@@ -5393,7 +5392,7 @@ declare namespace LocalJSX {
     /**
     * By default `ion-nav` animates transition between pages based in the mode (ios or material design). However, this property allows to create custom transition using `AnimateBuilder` functions.
     */
-    'animation'?: AnimationBuilder;
+    'animation'?: Animation;
     /**
     * The mode determines which platform styles to use.
     */
@@ -5992,7 +5991,7 @@ declare namespace LocalJSX {
     /**
     * Animation to use when the toast is presented.
     */
-    'enterAnimation'?: AnimationBuilder;
+    'enterAnimation'?: Animation;
     /**
     * Header to be shown in the toast.
     */
@@ -6004,7 +6003,7 @@ declare namespace LocalJSX {
     /**
     * Animation to use when the toast is dismissed.
     */
-    'leaveAnimation'?: AnimationBuilder;
+    'leaveAnimation'?: Animation;
     /**
     * Message to be shown in the toast.
     */

@@ -31,7 +31,7 @@ export * from './components/toggle/toggle-interface';
 export * from './components/virtual-scroll/virtual-scroll-interface';
 
 // Types from utils
-export { Animation as IonicAnimation } from './utils/animation/animation-interface';
+export { Animation } from './utils/animation/animation-interface';
 export * from './utils/overlays-interface';
 export * from './global/config';
 export { Gesture, GestureDetail } from './utils/gesture';

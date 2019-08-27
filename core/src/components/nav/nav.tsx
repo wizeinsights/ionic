@@ -2,7 +2,7 @@ import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch, h 
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture, IonicAnimation, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
+import { Animation, ComponentProps, FrameworkDelegate, Gesture, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, RouterDirection, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
 import { assert } from '../../utils/helpers';
 import { TransitionOptions, lifecycle, setPageHidden, transition } from '../../utils/transition';
 
@@ -17,7 +17,7 @@ import { VIEW_STATE_ATTACHED, VIEW_STATE_DESTROYED, VIEW_STATE_NEW, convertToVie
 export class Nav implements NavOutlet {
 
   private transInstr: TransitionInstruction[] = [];
-  private sbAni?: Animation | IonicAnimation;
+  private sbAni?: Animation;
   private useRouter = false;
   private isTransitioning = false;
   private destroyed = false;
@@ -49,7 +49,7 @@ export class Nav implements NavOutlet {
    * By default `ion-nav` animates transition between pages based in the mode (ios or material design).
    * However, this property allows to create custom transition using `AnimateBuilder` functions.
    */
-  @Prop() animation?: AnimationBuilder;
+  @Prop() animation?: Animation;
 
   /**
    * Any parameters for the root component
@@ -823,7 +823,7 @@ export class Nav implements NavOutlet {
     const opts = ti.opts!;
 
     const progressCallback = opts.progressAnimation
-      ? (ani: IonicAnimation | Animation | undefined) => this.sbAni = ani
+      ? (ani: Animation | undefined) => this.sbAni = ani
       : undefined;
     const mode = getIonMode(this);
     const enteringEl = enteringView.element!;

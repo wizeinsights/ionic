@@ -2,7 +2,7 @@ import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Hos
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Gesture, GestureDetail, IonicAnimation, MenuChangeEventDetail, MenuControllerI, MenuI, Side } from '../../interface';
+import { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Side } from '../../interface';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
 
@@ -16,7 +16,7 @@ import { assert, isEndSide as isEnd } from '../../utils/helpers';
 })
 export class Menu implements ComponentInterface, MenuI {
 
-  private animation?: any;
+  private animation?: Animation;
   private lastOnEnd = 0;
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
@@ -314,7 +314,7 @@ export class Menu implements ComponentInterface, MenuI {
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
     const isReversed = !shouldOpen;
-    const ani = (this.animation as IonicAnimation)!
+    const ani = (this.animation as Animation)!
       .direction((isReversed) ? 'reverse' : 'normal')
       .easing((isReversed) ? 'cubic-bezier(0.4, 0.0, 0.6, 1)' : 'cubic-bezier(0.0, 0.0, 0.2, 1)');
 
@@ -363,7 +363,7 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     // the cloned animation should not use an easing curve during seek
-    (this.animation as IonicAnimation)
+    this.animation
       .direction((this._isOpen) ? 'reverse' : 'normal')
       .progressStart(true);
   }
@@ -419,8 +419,11 @@ export class Menu implements ComponentInterface, MenuI {
 
     this.lastOnEnd = detail.timeStamp;
     this.animation
-      .onFinish(() => this.afterAnimation(shouldOpen), {
-        oneTime: true
+      .onFinish({
+        callback: () => this.afterAnimation(shouldOpen), 
+        opts: {
+          oneTimeCallback: true
+        }
       })
       .progressEnd(shouldComplete, stepValue, realDur);
   }
@@ -501,7 +504,7 @@ export class Menu implements ComponentInterface, MenuI {
     assert(this._isOpen, 'menu cannot be closed');
 
     this.isAnimating = true;
-    const ani = (this.animation as IonicAnimation)!.direction('reverse');
+    const ani = this.animation!.direction('reverse');
     ani.playSync();
     this.afterAnimation(false);
   }

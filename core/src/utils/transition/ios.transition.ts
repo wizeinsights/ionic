@@ -1,4 +1,4 @@
-import { IonicAnimation } from '../../interface';
+import { Animation } from '../../interface';
 import { createAnimation } from '../animation/animation';
 import { TransitionOptions } from '../transition';
 
@@ -6,7 +6,7 @@ export const shadow = <T extends Element>(el: T): ShadowRoot | T => {
   return el.shadowRoot || el;
 };
 
-export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptions): IonicAnimation => {
+export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptions): Animation => {
   try {
     const DURATION = 540;
     const EASING = 'cubic-bezier(0.32,0.72,0,1)';

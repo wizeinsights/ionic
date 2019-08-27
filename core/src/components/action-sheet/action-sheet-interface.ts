@@ -1,4 +1,4 @@
-import { AnimationBuilder, Mode } from '../../interface';
+import { Animation, Mode } from '../../interface';
 
 export interface ActionSheetOptions {
   header?: string;
@@ -12,8 +12,8 @@ export interface ActionSheetOptions {
   keyboardClose?: boolean;
   id?: string;
 
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
+  enterAnimation?: Animation;
+  leaveAnimation?: Animation;
 }
 
 export interface ActionSheetButton {

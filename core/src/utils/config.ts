@@ -1,4 +1,4 @@
-import { AnimationBuilder, Mode, SpinnerTypes, TabButtonLayout } from '../interface';
+import { Animation, Mode, SpinnerTypes, TabButtonLayout } from '../interface';
 
 export interface IonicConfig {
   /**
@@ -93,77 +93,77 @@ export interface IonicConfig {
    * Overrides the default "animation" of all `ion-nav` and `ion-router-outlet` across the whole application.
    * This prop allows to replace the default transition and provide a custom one that applies to all navigation outlets.
    */
-  navAnimation?: AnimationBuilder;
+  navAnimation?: Animation;
 
   /**
    * Provides a custom enter animation for all `ion-action-sheet`, overriding the default "animation".
    */
-  actionSheetEnter?: AnimationBuilder;
+  actionSheetEnter?: Animation;
 
   /**
    * Provides a custom enter animation for all `ion-alert`, overriding the default "animation".
    */
-  alertEnter?: AnimationBuilder;
+  alertEnter?: Animation;
 
   /**
    * Provides a custom enter animation for all `ion-loading`, overriding the default "animation".
    */
-  loadingEnter?: AnimationBuilder;
+  loadingEnter?: Animation;
 
   /**
    * Provides a custom enter animation for all `ion-modal`, overriding the default "animation".
    */
-  modalEnter?: AnimationBuilder;
+  modalEnter?: Animation;
 
   /**
    * Provides a custom enter animation for all `ion-popover`, overriding the default "animation".
    */
-  popoverEnter?: AnimationBuilder;
+  popoverEnter?: Animation;
 
   /**
    * Provides a custom enter animation for all `ion-toast`, overriding the default "animation".
    */
-  toastEnter?: AnimationBuilder;
+  toastEnter?: Animation;
 
   /**
    * Provides a custom enter animation for all `ion-picker`, overriding the default "animation".
    */
-  pickerEnter?: AnimationBuilder;
+  pickerEnter?: Animation;
 
   /**
    * Provides a custom leave animation for all `ion-action-sheet`, overriding the default "animation".
    */
-  actionSheetLeave?: AnimationBuilder;
+  actionSheetLeave?: Animation;
 
   /**
    * Provides a custom leave animation for all `ion-alert`, overriding the default "animation".
    */
-  alertLeave?: AnimationBuilder;
+  alertLeave?: Animation;
 
   /**
    * Provides a custom leave animation for all `ion-loading`, overriding the default "animation".
    */
-  loadingLeave?: AnimationBuilder;
+  loadingLeave?: Animation;
 
   /**
    * Provides a custom leave animation for all `ion-modal`, overriding the default "animation".
    */
-  modalLeave?: AnimationBuilder;
+  modalLeave?: Animation;
 
   /**
    * Provides a custom leave animation for all `ion-popover`, overriding the default "animation".
    */
-  popoverLeave?: AnimationBuilder;
+  popoverLeave?: Animation;
 
   /**
    * Provides a custom leave animation for all `ion-toast`, overriding the default "animation".
    */
-  toastLeave?: AnimationBuilder;
+  toastLeave?: Animation;
 
   /**
    * Provides a custom leave animation for all `ion-picker`, overriding the default "animation".
    */
-  pickerLeave?: AnimationBuilder;
+  pickerLeave?: Animation;
 
   /**
    * EXPERIMENTAL: Adds a page shadow to transitioning pages on iOS. Disabled by default.

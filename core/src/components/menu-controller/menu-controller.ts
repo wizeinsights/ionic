@@ -1,7 +1,7 @@
 import { Build, Component, Method } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { AnimationBuilder, IonicAnimation, MenuControllerI, MenuI } from '../../interface';
+import { Animation, MenuControllerI, MenuI } from '../../interface';
 
 import { menuOverlayAnimation } from './animations/overlay';
 import { menuPushAnimation } from './animations/push';
@@ -14,7 +14,7 @@ import { menuRevealAnimation } from './animations/reveal';
 export class MenuController implements MenuControllerI {
 
   private menus: MenuI[] = [];
-  private menuAnimations = new Map<string, ((menu: MenuI) => IonicAnimation) | AnimationBuilder>();
+  private menuAnimations = new Map<string, ((menu: MenuI) => Animation)>();
 
   constructor() {
     this.registerAnimation('reveal', menuRevealAnimation);
@@ -226,7 +226,7 @@ export class MenuController implements MenuControllerI {
    * @param animation The animation function to register.
    */
   @Method()
-  async registerAnimation(name: string, animation: AnimationBuilder | ((menu: MenuI) => IonicAnimation)) {
+  async registerAnimation(name: string, animation: (menu: MenuI) => Animation) {
     this.menuAnimations.set(name, animation);
   }
 

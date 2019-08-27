@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Pr
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, IonicAnimation, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
+import { Animation, ComponentProps, ComponentRef, FrameworkDelegate, Gesture, NavOutlet, RouteID, RouteWrite, RouterDirection, RouterOutletOptions, SwipeGestureHandler } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { transition } from '../../utils/transition';
 
@@ -17,7 +17,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   private activeComponent: any;
   private waitPromise?: Promise<void>;
   private gesture?: Gesture;
-  private ani?: IonicAnimation | Animation;
+  private ani?: Animation;
 
   @Element() el!: HTMLElement;
 
@@ -38,7 +38,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
    * By default `ion-nav` animates transition between pages based in the mode (ios or material design).
    * However, this property allows to create custom transition using `AnimateBuilder` functions.
    */
-  @Prop() animation?: AnimationBuilder;
+  @Prop() animation?: Animation;
 
   /** @internal */
   @Prop() swipeHandler?: SwipeGestureHandler;

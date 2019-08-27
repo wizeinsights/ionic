@@ -1,8 +1,8 @@
 import { config } from '../global/config';
-import { ActionSheetOptions, AlertOptions, BackButtonEvent, HTMLIonOverlayElement, IonicAnimation, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
+import { Animation, ActionSheetOptions, AlertOptions, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, LoadingOptions, ModalOptions, OverlayInterface, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
 
 // TODO: Remove when removing AnimationBuilder
-export type IonicAnimationInterface = (baseEl: any, opts: any) => IonicAnimation;
+export type AnimationInterface = (baseEl: any, opts: any) => Animation;
 
 let lastId = 0;
 
@@ -114,8 +114,8 @@ export const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTM
 export const present = async (
   overlay: OverlayInterface,
   name: keyof IonicConfig,
-  iosEnterAnimation: IonicAnimationInterface,
-  mdEnterAnimation: IonicAnimationInterface,
+  iosEnterAnimation: AnimationInterface,
+  mdEnterAnimation: AnimationInterface,
   opts?: any
 ) => {
   if (overlay.presented) {
@@ -140,8 +140,8 @@ export const dismiss = async (
   data: any | undefined,
   role: string | undefined,
   name: keyof IonicConfig,
-  iosLeaveAnimation: IonicAnimationInterface,
-  mdLeaveAnimation: IonicAnimationInterface,
+  iosLeaveAnimation: AnimationInterface,
+  mdLeaveAnimation: AnimationInterface,
   opts?: any
 ): Promise<boolean> => {
   if (!overlay.presented) {
@@ -173,7 +173,7 @@ const getAppRoot = (doc: Document) => {
 
 const overlayAnimation = async (
   overlay: OverlayInterface,
-  animationBuilder: IonicAnimationInterface,
+  animationBuilder: AnimationInterface,
   baseEl: any,
   opts: any
 ): Promise<boolean> => {

@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, CssClassMap, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
+import { Animation, CssClassMap, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
 import { dismiss, eventMethod, present, safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
@@ -41,12 +41,12 @@ export class Picker implements ComponentInterface, OverlayInterface {
   /**
    * Animation to use when the picker is presented.
    */
-  @Prop() enterAnimation?: AnimationBuilder;
+  @Prop() enterAnimation?: Animation;
 
   /**
    * Animation to use when the picker is dismissed.
    */
-  @Prop() leaveAnimation?: AnimationBuilder;
+  @Prop() leaveAnimation?: Animation;
 
   /**
    * Array of buttons to be displayed at the top of the picker.

@@ -2,7 +2,7 @@ import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Meth
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
+import { Animation, OverlayEventDetail, OverlayInterface, SpinnerTypes } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
@@ -43,12 +43,12 @@ export class Loading implements ComponentInterface, OverlayInterface {
   /**
    * Animation to use when the loading indicator is presented.
    */
-  @Prop() enterAnimation?: AnimationBuilder;
+  @Prop() enterAnimation?: Animation;
 
   /**
    * Animation to use when the loading indicator is dismissed.
    */
-  @Prop() leaveAnimation?: AnimationBuilder;
+  @Prop() leaveAnimation?: Animation;
 
   /**
    * Optional text content to display in the loading indicator.

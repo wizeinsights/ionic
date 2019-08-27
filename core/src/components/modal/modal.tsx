@@ -1,7 +1,7 @@
 import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { Animation, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
@@ -47,12 +47,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
   /**
    * Animation to use when the modal is presented.
    */
-  @Prop() enterAnimation?: AnimationBuilder;
+  @Prop() enterAnimation?: Animation;
 
   /**
    * Animation to use when the modal is dismissed.
    */
-  @Prop() leaveAnimation?: AnimationBuilder;
+  @Prop() leaveAnimation?: Animation;
 
   /**
    * The component to display inside of the modal.

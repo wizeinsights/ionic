@@ -1,4 +1,4 @@
-import { Animation, AnimationBuilder, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
+import { Animation, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
 
 import { ViewController } from './view-controller';
 
@@ -22,7 +22,7 @@ export interface SwipeGestureHandler {
 
 export interface RouterOutletOptions {
   animated?: boolean;
-  animationBuilder?: AnimationBuilder;
+  animationBuilder?: Animation;
   duration?: number;
   easing?: string;
   showGoBack?: boolean;

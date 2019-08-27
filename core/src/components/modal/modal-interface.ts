@@ -1,4 +1,4 @@
-import { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
+import { Animation, ComponentProps, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
 
 export interface ModalOptions<T extends ComponentRef = ComponentRef> {
   component: T;
@@ -13,6 +13,6 @@ export interface ModalOptions<T extends ComponentRef = ComponentRef> {
   keyboardClose?: boolean;
   id?: string;
 
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
+  enterAnimation?: Animation;
+  leaveAnimation?: Animation;
 }
