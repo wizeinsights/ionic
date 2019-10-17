@@ -88,17 +88,17 @@ export class Header implements ComponentInterface {
 
     this.scrollEl = await contentEl.getScrollElement();
 
+    const headers = pageEl.querySelectorAll('ion-header');
+    const mainHeader = Array.from(headers).find((header: any) => header.collapse !== 'condense') as HTMLElement | undefined;
+
+    if (!mainHeader) { return; }
+
+    const mainHeaderIndex = createHeaderIndex(mainHeader);
+    const scrollHeaderIndex = createHeaderIndex(this.el);
+
+    if (!mainHeaderIndex || !scrollHeaderIndex) { return; }
+
     readTask(() => {
-      const headers = pageEl.querySelectorAll('ion-header');
-      const mainHeader = Array.from(headers).find((header: any) => header.collapse !== 'condense') as HTMLElement | undefined;
-
-      if (!mainHeader || !this.scrollEl) { return; }
-
-      const mainHeaderIndex = createHeaderIndex(mainHeader);
-      const scrollHeaderIndex = createHeaderIndex(this.el);
-
-      if (!mainHeaderIndex || !scrollHeaderIndex) { return; }
-
       setHeaderActive(mainHeaderIndex, false);
 
       // TODO: Find a better way to do this
@@ -125,12 +125,15 @@ export class Header implements ComponentInterface {
        * in primary header
        */
       this.contentScrollCallback = () => { handleContentScroll(this.scrollEl!, mainHeaderIndex, scrollHeaderIndex, remainingHeight); };
-      this.scrollEl.addEventListener('scroll', this.contentScrollCallback);
+      this.scrollEl!.addEventListener('scroll', this.contentScrollCallback);
     });
 
     writeTask(() => {
       cloneElement('ion-title');
       cloneElement('ion-back-button');
+      
+      console.log(mainHeaderIndex, mainHeaderIndex.el)
+      mainHeaderIndex.el.classList.add('header-collapse-main');
     });
 
     this.collapsibleHeaderInitialized = true;

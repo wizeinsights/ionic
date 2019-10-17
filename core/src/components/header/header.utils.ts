@@ -120,14 +120,12 @@ export const handleToolbarIntersection = (ev: any, mainHeaderIndex: HeaderIndex,
 };
 
 export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
-  writeTask(() => {
-    if (active) {
-      headerIndex.el.classList.remove('header-collapse-condense-inactive');
-    } else {
-      headerIndex.el.classList.add('header-collapse-condense-inactive');
-    }
-    setToolbarBackgroundOpacity(headerIndex.toolbars[0], (active) ? undefined : 0);
-  });
+  if (active) {
+    headerIndex.el.classList.remove('header-collapse-condense-inactive');
+  } else {
+    headerIndex.el.classList.add('header-collapse-condense-inactive');
+  }
+  setToolbarBackgroundOpacity(headerIndex.toolbars[0], (active) ? undefined : 0);
 };
 
 export const scaleLargeTitles = (toolbars: ToolbarIndex[] = [], scale = 1, transition = false) => {
