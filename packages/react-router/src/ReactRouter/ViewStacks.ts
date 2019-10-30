@@ -1,8 +1,8 @@
-import { Location as HistoryLocation } from 'history';
-import { matchPath } from 'react-router-dom';
+import { Location as HistoryLocation } from "history";
+import { matchPath } from "react-router-dom";
 
-import { IonRouteData } from './IonRouteData';
-import { ViewItem } from './ViewItem';
+import { IonRouteData } from "./IonRouteData";
+import { ViewItem } from "./ViewItem";
 
 export interface ViewStack {
   id: string;
@@ -34,18 +34,24 @@ export class ViewStacks {
 
   findViewInfoByLocation(location: HistoryLocation, viewKey?: string) {
     let view: ViewItem<IonRouteData> | undefined;
-    let match: IonRouteData['match'] | null | undefined;
+    let match: IonRouteData["match"] | null | undefined;
     let viewStack: ViewStack | undefined;
     if (viewKey) {
       viewStack = this.viewStacks[viewKey];
       if (viewStack) {
-        viewStack.views.some(matchView);
+        ([] as ViewItem<any>[])
+          .concat(viewStack.views)
+          .reverse()
+          .some(matchView);
       }
     } else {
       const keys = this.getKeys();
       keys.some(key => {
         viewStack = this.viewStacks[key];
-        return viewStack!.views.some(matchView);
+        return ([] as ViewItem<any>[])
+          .concat(viewStack!.views)
+          .reverse()
+          .some(matchView);
       });
     }
 
@@ -59,16 +65,22 @@ export class ViewStacks {
         component: v.routeData.childProps.component
       };
       match = matchPath(location.pathname, matchProps);
+      if (
+        (v as any)._location &&
+        location.pathname === (v as any)._location.pathname
+      ) {
+        match = null;
+      }
+
       if (match) {
         view = v;
         return true;
       }
       return false;
     }
-
   }
 
-  findViewInfoById(id = '') {
+  findViewInfoById(id = "") {
     let view: ViewItem<IonRouteData> | undefined;
     let viewStack: ViewStack | undefined;
     const keys = this.getKeys();
@@ -84,5 +96,4 @@ export class ViewStacks {
     });
     return { view, viewStack };
   }
-
 }

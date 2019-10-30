@@ -34,7 +34,7 @@ export class NavManager extends React.Component<NavManagerProps, NavContextState
       currentPath: this.props.location.pathname,
       registerIonPage: () => { return; }, // overridden in View for each IonPage
       tabNavigate: this.tabNavigate.bind(this)
-    };
+    } as any;
 
     this.listenUnregisterCallback = this.props.history.listen((location: HistoryLocation) => {
       this.setState({
