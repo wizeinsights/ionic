@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-router",
-  "version": "4.11.3",
+  "version": "4.11.3-0.viewstacks-fix",
   "description": "React Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
