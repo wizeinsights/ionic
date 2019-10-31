@@ -1,13 +1,14 @@
-import { Location as HistoryLocation } from "history";
-import { matchPath } from "react-router-dom";
+import { Location as HistoryLocation } from 'history';
+import { matchPath } from 'react-router-dom';
 
-import { IonRouteData } from "./IonRouteData";
-import { ViewItem } from "./ViewItem";
+import { IonRouteData } from './IonRouteData';
+import { ViewItem } from './ViewItem';
 
 export interface ViewStack {
   id: string;
   routerOutlet: HTMLIonRouterOutletElement;
   views: ViewItem[];
+  queue?: string[];
 }
 
 /**
@@ -34,7 +35,7 @@ export class ViewStacks {
 
   findViewInfoByLocation(location: HistoryLocation, viewKey?: string) {
     let view: ViewItem<IonRouteData> | undefined;
-    let match: IonRouteData["match"] | null | undefined;
+    let match: IonRouteData['match'] | null | undefined;
     let viewStack: ViewStack | undefined;
     if (viewKey) {
       viewStack = this.viewStacks[viewKey];
@@ -65,9 +66,10 @@ export class ViewStacks {
         component: v.routeData.childProps.component
       };
       match = matchPath(location.pathname, matchProps);
+
       if (
         (v as any)._location &&
-        location.pathname === (v as any)._location.pathname
+        location.pathname !== (v as any)._location.pathname
       ) {
         match = null;
       }
@@ -80,7 +82,7 @@ export class ViewStacks {
     }
   }
 
-  findViewInfoById(id = "") {
+  findViewInfoById(id = '') {
     let view: ViewItem<IonRouteData> | undefined;
     let viewStack: ViewStack | undefined;
     const keys = this.getKeys();

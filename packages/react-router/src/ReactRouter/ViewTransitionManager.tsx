@@ -33,6 +33,8 @@ export class ViewTransitionManager extends React.Component<ViewTransitionManager
             show: false
           }, () => {
             this.context.hideView(this.props.id);
+            // bugfix: remove clone view after go back
+            this.context.removeCloneView(this.props.id);
           });
         }
       }
