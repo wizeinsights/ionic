@@ -218,16 +218,29 @@ class RouteManager extends React.Component<
 
     // clone view if location in history
     if (direction === 'forward' && action === 'PUSH') {
-      const viewStacks = Object.assign(new ViewStacks(), this.state.viewStacks);
-      const viewStackKeys = viewStacks.getKeys();
-      viewStackKeys.forEach(key => {
-        const { view, match } = viewStacks.findViewInfoByLocation(
+      let matchedViewInfo: ReturnType<
+        typeof ViewStacks['prototype']['findViewInfoByLocation']
+      > | undefined;
+      let matchedStack: ViewStack | undefined;
+
+      const viewStackKeys = this.state.viewStacks.getKeys();
+      viewStackKeys.some(key => {
+        const viewInfo = this.state.viewStacks.findViewInfoByLocation(
           location,
           key
         );
-        const stacks = viewStacks.get(key)!;
 
-        stacks.queue = stacks.queue || [];
+        if (viewInfo.view) {
+          matchedViewInfo = viewInfo;
+          matchedStack = this.state.viewStacks.get(key)!;
+          return true;
+        }
+        return false;
+      });
+
+      if (matchedViewInfo && matchedStack) {
+        const { view, match } = matchedViewInfo;
+        matchedStack.activeViewIdQueue = matchedStack.activeViewIdQueue || [];
 
         if (view!.show) {
           const cloneView = {
@@ -246,12 +259,12 @@ class RouteManager extends React.Component<
             prevId: null
           };
 
-          stacks.views.push(cloneView as any);
-          stacks.queue.push(cloneView.id);
+          matchedStack.views.push(cloneView as any);
+          matchedStack.activeViewIdQueue.push(cloneView.id);
         } else {
-          stacks.queue.push(view!.id);
+          matchedStack.activeViewIdQueue.push(view!.id);
         }
-      });
+      }
     }
 
     return {
@@ -261,27 +274,39 @@ class RouteManager extends React.Component<
   }
 
   removeCloneView() {
-    const viewStacks = Object.assign(new ViewStacks(), this.state.viewStacks);
-    const viewStackKeys = viewStacks.getKeys();
+    let matchedViewInfo: ReturnType<
+      typeof ViewStacks['prototype']['findViewInfoByLocation']
+    > | undefined;
+    let matchedStack: ViewStack | undefined;
 
-    viewStackKeys.forEach(key => {
-      const { view: enteringView } = viewStacks.findViewInfoByLocation(
+    const viewStackKeys = this.state.viewStacks.getKeys();
+    viewStackKeys.some(key => {
+      const viewInfo = this.state.viewStacks.findViewInfoByLocation(
         this.state.location!,
         key
       );
-      const stacks = viewStacks.get(key)!;
-      const queue = stacks.queue || [];
-      const index = queue.indexOf(enteringView!.id);
-      const removeIds = queue.slice(index + 1);
-      const views = stacks.views;
+
+      if (viewInfo.view) {
+        matchedViewInfo = viewInfo;
+        matchedStack = this.state.viewStacks.get(key)!;
+        return true;
+      }
+      return false;
+    });
+
+    if (matchedViewInfo && matchedStack) {
+      const enteringView = matchedViewInfo.view!;
+      const index = matchedStack.activeViewIdQueue.indexOf(enteringView!.id);
+      const removeIds = matchedStack.activeViewIdQueue.slice(index + 1);
+      const views = matchedStack.views;
       const removeViews = views.filter(
         (v: any) => v._location && removeIds.indexOf(v.id) !== -1
       );
       removeViews.forEach(v => {
         views.splice(views.indexOf(v), 1);
       });
-      stacks.queue = queue.slice(0, index + 1);
-    });
+      matchedStack.activeViewIdQueue = matchedStack.activeViewIdQueue.slice(0, index + 1);
+    }
   }
 
   removeOrphanedViews(view: ViewItem, viewStack: ViewStack) {
@@ -379,7 +404,8 @@ class RouteManager extends React.Component<
           const newStack: ViewStack = {
             id: stack,
             views: stackItems,
-            routerOutlet
+            routerOutlet,
+            activeViewIdQueue: [],
           };
           if (activeId) {
             this.activeIonPageId = activeId;
