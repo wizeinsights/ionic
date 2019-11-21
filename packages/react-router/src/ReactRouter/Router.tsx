@@ -34,7 +34,8 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
       hideView: this.hideView.bind(this),
       setupIonRouter: this.setupIonRouter.bind(this),
       removeViewStack: this.removeViewStack.bind(this),
-      syncView: this.syncView.bind(this)
+      syncView: this.syncView.bind(this),
+      removeCloneViews: this.removeCloneViews.bind(this),
     };
 
     this.locationHistory.add({
@@ -84,10 +85,104 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
     } else {
       this.locationHistory.replace(location);
     }
+    this.maybeCloneView(location, action);
     this.setState({
       location,
       action
     });
+  }
+
+  maybeCloneView(location: HistoryLocation, action: HistoryAction) {
+    const direction = (location.state && location.state.direction) || 'forward';
+
+    // clone view if location in history
+    if (direction === 'forward' && action === 'PUSH') {
+      let matchedViewInfo: ReturnType<
+        typeof ViewStacks['prototype']['findViewInfoByLocation']
+      > | undefined;
+      let matchedStack: ViewStack | undefined;
+
+      const viewStackKeys = this.state.viewStacks.getKeys();
+      viewStackKeys.some(key => {
+        const viewInfo = this.state.viewStacks.findViewInfoByLocation(
+          location,
+          key
+        );
+
+        if (viewInfo.view) {
+          matchedViewInfo = viewInfo;
+          matchedStack = this.state.viewStacks.get(key)!;
+          return true;
+        }
+        return false;
+      });
+
+      if (matchedViewInfo && matchedStack) {
+        const { view, match } = matchedViewInfo;
+
+        if (view!.show) {
+          const cloneView = {
+            ...view,
+            _location: location,
+            id: generateId(),
+            key: generateId(),
+            routeData: {
+              match,
+              childProps: view!.routeData.childProps
+            },
+            ionPageElement: undefined,
+            mount: false,
+            show: false,
+            isIonRoute: false,
+            prevId: null
+          };
+
+          matchedStack.views.push(cloneView as any);
+          matchedStack.activeViewIdQueue.push(cloneView.id);
+        } else {
+          matchedStack.activeViewIdQueue.push(view!.id);
+        }
+      }
+    }
+
+    return {
+      location,
+      action
+    };
+  }
+
+  removeCloneViews() {
+    let matchedViewInfo: ReturnType<
+      typeof ViewStacks['prototype']['findViewInfoByLocation']
+    > | undefined;
+    let matchedStack: ViewStack | undefined;
+
+    const viewStackKeys = this.state.viewStacks.getKeys();
+    viewStackKeys.some(key => {
+      const viewInfo = this.state.viewStacks.findViewInfoByLocation(
+        this.state.location!,
+        key
+      );
+
+      if (viewInfo.view) {
+        matchedViewInfo = viewInfo;
+        matchedStack = this.state.viewStacks.get(key)!;
+        return true;
+      }
+      return false;
+    });
+
+    if (matchedViewInfo && matchedStack) {
+      const enteringView = matchedViewInfo.view!;
+      const enteringIndex = matchedStack.activeViewIdQueue.indexOf(enteringView!.id);
+      const removeViewIds = new Set(matchedStack.activeViewIdQueue.slice(enteringIndex + 1));
+
+      const filteredViews = matchedStack.views.filter(
+        (v: any) => !(v._location && removeViewIds.has(v.id))
+      );
+      matchedStack.views = filteredViews;
+      matchedStack.activeViewIdQueue = matchedStack.activeViewIdQueue.slice(0, enteringIndex + 1);
+    }
   }
 
   setActiveView(location: HistoryLocation, action: HistoryAction) {
@@ -252,7 +347,8 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
       const newStack: ViewStack = {
         id: stack,
         views: stackItems,
-        routerOutlet
+        routerOutlet,
+        activeViewIdQueue: [],
       };
       if (activeId) {
         this.activeIonPageId = activeId;

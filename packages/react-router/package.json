@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-router",
-  "version": "4.11.5",
+  "version": "4.11.5-sameroute-cloneview-fix",
   "description": "React Router wrapper for @ionic/react",
   "keywords": [
     "ionic",

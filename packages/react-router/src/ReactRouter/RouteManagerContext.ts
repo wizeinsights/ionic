@@ -8,6 +8,7 @@ export interface RouteManagerContextState {
   viewStacks: ViewStacks;
   setupIonRouter: (id: string, children: ReactNode, routerOutlet: HTMLIonRouterOutletElement) => void;
   removeViewStack: (stack: string) => void;
+  removeCloneViews: () => void;
 }
 
 export const RouteManagerContext = /*@__PURE__*/React.createContext<RouteManagerContextState>({
@@ -15,7 +16,8 @@ export const RouteManagerContext = /*@__PURE__*/React.createContext<RouteManager
   syncView: () => { navContextNotFoundError(); },
   hideView: () => { navContextNotFoundError(); },
   setupIonRouter: () => Promise.reject(navContextNotFoundError()),
-  removeViewStack: () => { navContextNotFoundError(); }
+  removeViewStack: () => { navContextNotFoundError(); },
+  removeCloneViews: () => { navContextNotFoundError(); },
 });
 
 function navContextNotFoundError() {
