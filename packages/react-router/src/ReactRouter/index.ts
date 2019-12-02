@@ -1,4 +1,5 @@
-export { IonReactRouter } from './IonReactRouter';
-export { IonReactHashRouter } from './IonReactHashRouter';
+export { IonReactRouter } from "./IonReactRouter";
+export { IonReactHashRouter } from "./IonReactHashRouter";
 
-export { RouteManagerWithRouter as IonRouteManager } from './Router';
+import { RouteManagerWithRouter as IonRouteManager } from "./Router";
+export { IonRouteManager };

@@ -76,7 +76,7 @@ class RouteManager extends React.Component<RouteComponentProps, RouteManagerStat
   }
 
   historyChange(location: HistoryLocation, action: HistoryAction) {
-    location.state = location.state || { direction: this.currentDirection };
+    location.state = { ...(location.state || {}), direction: this.currentDirection };
     this.currentDirection = undefined;
     if (action === 'PUSH') {
       this.locationHistory.add(location);
