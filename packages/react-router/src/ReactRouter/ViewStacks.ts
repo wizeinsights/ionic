@@ -8,7 +8,6 @@ export interface ViewStack {
   id: string;
   routerOutlet: HTMLIonRouterOutletElement;
   views: ViewItem[];
-  activeViewIdQueue: string[];
 }
 
 /**
@@ -40,13 +39,13 @@ export class ViewStacks {
     if (viewKey) {
       viewStack = this.viewStacks[viewKey];
       if (viewStack) {
-        [...viewStack.views].reverse().some(matchView);
+        viewStack.views.some(matchView);
       }
     } else {
       const keys = this.getKeys();
       keys.some(key => {
         viewStack = this.viewStacks[key];
-        return [...viewStack!.views].reverse().some(matchView);
+        return viewStack!.views.some(matchView);
       });
     }
 
@@ -60,12 +59,6 @@ export class ViewStacks {
         component: v.routeData.childProps.component
       };
       match = matchPath(location.pathname, matchProps);
-      if (
-        (v as any)._location &&
-        location.pathname !== (v as any)._location.pathname
-      ) {
-        match = null;
-      }
       if (match) {
         view = v;
         return true;
